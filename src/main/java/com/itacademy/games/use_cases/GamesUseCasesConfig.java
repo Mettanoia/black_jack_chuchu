@@ -2,13 +2,21 @@ package com.itacademy.games.use_cases;
 
 import com.itacademy.domain.entities.Game;
 import com.itacademy.games.repositories.GameRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.socket.WebSocketHandler;
 
 import static reactor.core.publisher.Mono.empty;
 
+
 @Configuration
+
+@RequiredArgsConstructor
+
 class GamesUseCasesConfig {
+
+    private final WebSocketHandler webSocketHandler;
 
     @Bean
     public FindAllGamesUseCase findAllGamesUseCase(GameRepository gameRepository) {
@@ -32,7 +40,7 @@ class GamesUseCasesConfig {
 
     @Bean
     public HitUseCase hitUseCase(GameRepository gameRepository) {
-        return session -> empty();
+        return () -> empty();
     }
 
 }

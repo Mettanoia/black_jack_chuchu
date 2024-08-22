@@ -15,13 +15,13 @@ import java.util.Map;
 @Configuration
 class GamesWebSocketConfig {
 
-    private final HitUseCase hitUseCase;
+    private final WebSocketHandler webSocketHandler;
 
     @Bean
     public HandlerMapping gamesWebSocketHandlerMapping() {
 
         Map<String, WebSocketHandler> endpoints = Map.of(
-                "/ws/games/hit", hitUseCase
+                "/ws/games/hit", webSocketHandler
         );
 
         SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();

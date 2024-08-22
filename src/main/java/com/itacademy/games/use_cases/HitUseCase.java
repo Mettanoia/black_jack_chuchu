@@ -1,7 +1,8 @@
 package com.itacademy.games.use_cases;
 
-import org.springframework.web.reactive.socket.WebSocketHandler;
+import reactor.core.publisher.Mono;
 
-public interface HitUseCase extends WebSocketHandler {
-
+@FunctionalInterface
+public interface HitUseCase {
+    Mono<Void> exec();
 }
