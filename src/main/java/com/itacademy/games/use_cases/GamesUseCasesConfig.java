@@ -40,7 +40,7 @@ class GamesUseCasesConfig {
 
     @Bean
     public HitUseCase hitUseCase(GameRepository gameRepository) {
-        return () -> empty();
+        return ((user, cardGameState) -> null);
     }
 
 }
