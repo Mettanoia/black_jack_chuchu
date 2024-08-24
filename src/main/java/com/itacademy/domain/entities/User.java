@@ -1,7 +1,11 @@
 package com.itacademy.domain.entities;
 
+import java.util.OptionalInt;
+import java.util.Set;
+
 public interface User {
-    void hit(Card card);
+
+    OptionalInt hit(Card card);
 
     void stand();
 
@@ -13,11 +17,12 @@ public interface User {
 
     double getCurrentBet();
 
-    java.util.Set<Card> getHand();
+    Set<Card> getHand();
 
     boolean isStanding();
 
     void setCurrentBet(double currentBet);
 
     void setHand(java.util.Set<Card> hand);
+
 }
