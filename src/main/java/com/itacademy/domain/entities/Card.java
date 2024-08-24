@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-final class Card {
+public final class Card {
 
     private final Rank rank;
 
