@@ -1,22 +1,20 @@
 package com.itacademy.games.use_cases;
 
-import com.itacademy.domain.entities.Game;
+import com.itacademy.domain.entities.CardGameState;
+import com.itacademy.domain.factories.GameFactory;
 import com.itacademy.games.repositories.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.socket.WebSocketHandler;
-
-import static reactor.core.publisher.Mono.empty;
 
 
 @Configuration
 
 @RequiredArgsConstructor
-
 class GamesUseCasesConfig {
 
-    private final WebSocketHandler webSocketHandler;
+    private final GameFactory gameFactory;
+    private final CardGameState cardGameState; // This implementation of the configuration needs the state to be injected
 
     @Bean
     public FindAllGamesUseCase findAllGamesUseCase(GameRepository gameRepository) {
@@ -30,7 +28,7 @@ class GamesUseCasesConfig {
 
     @Bean
     public SaveNewGameUseCase saveNewGameUseCase(GameRepository gameRepository) {
-        return () -> gameRepository.save(new Game());
+        return () -> gameRepository.save(gameFactory.createGame(null, null));
     }
 
     @Bean
@@ -40,7 +38,21 @@ class GamesUseCasesConfig {
 
     @Bean
     public HitUseCase hitUseCase(GameRepository gameRepository) {
-        return ((user, cardGameState) -> null);
+        return (user, cardGameState) -> null;
+    }
+
+    @Bean
+    public StandUseCase standUseCase() {
+        return (userId) -> cardGameState.getUsers().stream()
+                .filter(user -> user.getId() == cardGameState.getCurrentPlayerId())
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No user is the current user."))
+                .stand();
+    }
+
+    @Bean
+    public DealCardUseCase dealCardUseCase() {
+        return (user, deck) -> user.getHand().add(deck.pop());
     }
 
 }

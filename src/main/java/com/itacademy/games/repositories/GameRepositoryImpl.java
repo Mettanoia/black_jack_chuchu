@@ -12,35 +12,35 @@ import reactor.core.publisher.Mono;
 @Primary
 
 @RequiredArgsConstructor
-
 class GameRepositoryImpl implements GameRepository {
 
     private final GameGateway gameGateway;
+    private final GameMappers gameMappers;
 
     @Override
     public Flux<Game> findAll() {
-        return gameGateway.findAll().map(GameMappers::toDomain);
+        return gameGateway.findAll().flatMap(gameMappers::toDomain);
     }
 
     @Override
-    public Mono<Game> save(Game entity) {
+    public Mono<Game> save(Game game) {
         return gameGateway
-                .save(GameMappers.toEntity(entity))
-                .map(GameMappers::toDomain);
+                .save(gameMappers.toEntity(game))
+                .flatMap(gameMappers::toDomain);
     }
 
     @Override
     public Mono<Game> findById(Long id) {
-        return gameGateway.findById(id).map(GameMappers::toDomain);
+        return gameGateway.findById(id).flatMap(gameMappers::toDomain);
     }
 
     @Override
-    public Flux<Game> saveAll(Publisher<Game> entities) {
+    public Flux<Game> saveAll(Publisher<Game> games) {
         return gameGateway.saveAll(
-                        Flux.from(entities)
-                                .map(GameMappers::toEntity)
+                        Flux.from(games)
+                                .map(gameMappers::toEntity)
                 )
-                .map(GameMappers::toDomain);
+                .flatMap(gameMappers::toDomain);
     }
 
     @Override
@@ -50,7 +50,7 @@ class GameRepositoryImpl implements GameRepository {
 
     @Override
     public Flux<Game> findGamesByUser_Id(Integer id) {
-        return gameGateway.findGamesByUser_Id(Long.valueOf(id)).map(GameMappers::toDomain);
+        return gameGateway.findGamesByUser_Id(Long.valueOf(id)).flatMap(gameMappers::toDomain);
     }
 
 }

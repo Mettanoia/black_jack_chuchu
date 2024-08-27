@@ -1,6 +1,6 @@
 package com.itacademy.users.api;
 
-import com.itacademy.domain.entities.UserImpl;
+import com.itacademy.domain.entities.User;
 import com.itacademy.users.use_cases.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -39,14 +39,14 @@ class UsersApiConfig {
     }
 
     private Mono<ServerResponse> updateUserName(ServerRequest request) {
-        return request.bodyToMono(UserImpl.class)
+        return request.bodyToMono(User.class)
                 .flatMap(user -> updateUserUseCase.exec(user))
-                .flatMap(user -> ok().body(just(user), UserImpl.class))
+                .flatMap(user -> ok().body(just(user), User.class))
                 .onErrorResume(this::handleException);
     }
 
     private Mono<ServerResponse> getUsersRanking(ServerRequest request) {
-        return ok().body(getUsersRankingUseCase.exec(), UserImpl.class);
+        return ok().body(getUsersRankingUseCase.exec(), User.class);
     }
 
     private Mono<ServerResponse> handleException(Throwable e) {

@@ -1,14 +1,9 @@
 package com.itacademy.domain.entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+public interface Game {
 
-@NoArgsConstructor(force = true)
-@RequiredArgsConstructor
-@Getter
-public final class Game {
+    Integer getId();
 
-    private final Integer id;
+    Integer getWinnerId();
 
 }

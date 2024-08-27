@@ -1,11 +1,12 @@
 package com.itacademy.domain.entities;
 
-import java.util.OptionalInt;
 import java.util.Set;
 
 public interface User {
 
-    OptionalInt hit(Card card);
+    int hit(Card cardImpl);
+
+    int getHandScore();
 
     void stand();
 
@@ -21,8 +22,9 @@ public interface User {
 
     boolean isStanding();
 
+    boolean isBusted();
+
     void setCurrentBet(double currentBet);
 
-    void setHand(java.util.Set<Card> hand);
-
+    void setHand(Set<Card> hand);
 }

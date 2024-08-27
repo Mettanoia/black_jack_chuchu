@@ -1,5 +1,6 @@
 package com.itacademy.users.repositories;
 
+import com.itacademy.domain.entities.User;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
